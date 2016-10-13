@@ -16,6 +16,7 @@ variables:
 - `BACKUP_PATH`
 - `BACKUP_CRON_SCHEDULE`
 - `PGHOST`
+- `PGDATABASE`
 - `PGPORT`
 - `PGUSER`
 - `PGPASSWORD`
@@ -39,6 +40,7 @@ fitty-postgres-backup:
     - BACKUP_PATH=<this will be the directory containing your backups on s3>
     - BACKUP_CRON_SCHEDULE=<this will be the cron schedule if defined. Standard value is 1 hour>
     - PGHOST=<see the link section below>
+    - PGDATABASE=<dump only this database, default value export all>
     - PGUSER=<username>
     - PGPASSWORD=<password>
     - PGPORT=<this is usually 5432>
