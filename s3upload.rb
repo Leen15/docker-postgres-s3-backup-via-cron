@@ -32,9 +32,11 @@ else
   raise "S3 Object wasn't created"
 end
 
-DAYS_30 = 30 * 24 * 60 * 60
+
+DAYS = ENV['AWS_KEEP_FOR_DAYS'] || 30
+CHECK_TIME = DAYS * 24 * 60 * 60
 objects = bucket.objects.select do |o|
   time = o.last_modified
-  time < Time.now - DAYS_30
+  time < Time.now - CHECK_TIME
 end
 objects.each(&:delete)
