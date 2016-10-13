@@ -2,7 +2,7 @@
 
 This image dumps your postgres databases very hour,
 compresses the dump using bz2 and uploads it to an
-amazon S3 bucket. Backups older than 30 days are
+amazon S3 bucket. Backups older than 30 days (OR days defined in `AWS_KEEP_FOR_DAYS`) are
 deleted automatically.
 
 Configure the backup source and s3 target with these environment
@@ -12,6 +12,7 @@ variables:
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_BUCKET_NAME`
+- `AWS_KEEP_FOR_DAYS`
 - `BACKUP_NAME`
 - `PGHOST`
 - `PGPORT`
@@ -33,6 +34,7 @@ fitty-postgres-backup:
     - AWS_BUCKET_NAME=<your s3 bucket name>
     - AWS_REGION=<the region your bucket is in>
     - AWS_SECRET_ACCESS_KEY=< secret access key>
+    - AWS_KEEP_FOR_DAYS=< how many days do you want to keep backups>
     - BACKUP_NAME=<this will be the directory containing your backups on s3>
     - PGHOST=<see the link section below>
     - PGUSER=<username>
