@@ -31,6 +31,8 @@ RUN chmod 0700 /backup/backup.sh
 COPY s3upload.rb /backup/s3upload.rb
 RUN chmod 0700 /backup/s3upload.rb
 
+# Define default CRON_SCHEDULE to 1 your
+ENV BACKUP_CRON_SCHEDULE="0 * * * *"
 
 # Prepare cron
 RUN touch /var/log/cron.log
