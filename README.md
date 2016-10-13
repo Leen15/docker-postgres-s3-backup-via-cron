@@ -1,6 +1,6 @@
 # Docker Postgres backup to Amazon S3 via cron
 
-This image dumps your postgres databases very hour,
+This image dumps your postgres databases every hour (OR custom cron defined in `BACKUP_CRON_SCHEDULE`),
 compresses the dump using bz2 and uploads it to an
 amazon S3 bucket. Backups older than 30 days (OR days defined in `AWS_KEEP_FOR_DAYS`) are
 deleted automatically.
@@ -14,6 +14,7 @@ variables:
 - `AWS_BUCKET_NAME`
 - `AWS_KEEP_FOR_DAYS`
 - `BACKUP_NAME`
+- `BACKUP_CRON_SCHEDULE`
 - `PGHOST`
 - `PGPORT`
 - `PGUSER`
@@ -36,6 +37,7 @@ fitty-postgres-backup:
     - AWS_SECRET_ACCESS_KEY=< secret access key>
     - AWS_KEEP_FOR_DAYS=< how many days do you want to keep backups>
     - BACKUP_NAME=<this will be the directory containing your backups on s3>
+    - BACKUP_CRON_SCHEDULE=<this will be the cron schedule if defined. Standard value is 1 hour>
     - PGHOST=<see the link section below>
     - PGUSER=<username>
     - PGPASSWORD=<password>
@@ -46,21 +48,6 @@ fitty-postgres-backup:
 
 The `links` section is optional, of course, just make sure you update the
 `PGHOST` environment variable accordingly.
-
-
-## Contribute
-
-This image does backups every hour and just keeps everything of the past 30
-days. It would be much better if this was configurable, if it would keep
-1 backup per day for the past 30-60 days, and so on.
-
-Also, it just dumps all the databases. Perhaps you just want some. That would
-also be a nice thing to implement, that it can be configured which databases
-should be backed up.
-
-Just [fork this repo](https://help.github.com/articles/fork-a-repo/), implement
-your changes and issue a PR. Don't be afraid if you're not sure how to do
-things. Just send that PR over (or a message) and we'll figure it out together. 🤓
 
 
 ## Thanks
