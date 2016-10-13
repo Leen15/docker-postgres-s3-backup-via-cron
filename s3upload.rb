@@ -33,7 +33,7 @@ end
 
 DAYS = ENV['AWS_KEEP_FOR_DAYS'] || 30
 CHECK_TIME = DAYS * 24 * 60 * 60
-objects = bucket.objects[project_path].select do |o|
+objects = bucket.objects.with_prefix(project_path).select do |o|
   o.last_modified < (Time.now - CHECK_TIME)
 end
 objects.each(&:delete)
