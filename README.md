@@ -13,7 +13,7 @@ variables:
 - `AWS_SECRET_ACCESS_KEY`
 - `AWS_BUCKET_NAME`
 - `AWS_KEEP_FOR_DAYS`
-- `BACKUP_NAME`
+- `BACKUP_PATH`
 - `BACKUP_CRON_SCHEDULE`
 - `PGHOST`
 - `PGPORT`
@@ -36,7 +36,7 @@ fitty-postgres-backup:
     - AWS_REGION=<the region your bucket is in>
     - AWS_SECRET_ACCESS_KEY=< secret access key>
     - AWS_KEEP_FOR_DAYS=< how many days do you want to keep backups>
-    - BACKUP_NAME=<this will be the directory containing your backups on s3>
+    - BACKUP_PATH=<this will be the directory containing your backups on s3>
     - BACKUP_CRON_SCHEDULE=<this will be the cron schedule if defined. Standard value is 1 hour>
     - PGHOST=<see the link section below>
     - PGUSER=<username>
