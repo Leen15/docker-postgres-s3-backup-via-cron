@@ -5,9 +5,10 @@ require 'fileutils'
 
 bucket_name = ENV['AWS_BUCKET_NAME']
 project_path = ENV['BACKUP_PATH']
+database_name = ENV['PGDATABASE'] || 'all_databases'
 
 time = Time.now.strftime("%Y-%m-%d-%H-%M-%S")
-filename = "#{time}.sql.dump.bz2"
+filename = "#{database_name}.#{time}.sql.dump.bz2"
 filepath = "/tmp/#{filename}"
 
 # Move the backup file from docker run
