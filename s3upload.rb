@@ -32,7 +32,7 @@ else
   raise "S3 Object wasn't created"
 end
 
-DAYS = ENV['AWS_KEEP_FOR_DAYS'].try(:to_i) || 30
+DAYS = ENV['AWS_KEEP_FOR_DAYS'].to_i || 30
 CHECK_TIME = DAYS * 24 * 60 * 60
 objects = bucket.objects.with_prefix(project_path).select do |o|
   o.last_modified < (Time.now - CHECK_TIME)
