@@ -1,0 +1,10 @@
+._*
+.~lock.*
+.buildpath
+.data
+.DS_Store
+.env
+.idea
+*.min.min.*
+dump.rdb
+dump.sql

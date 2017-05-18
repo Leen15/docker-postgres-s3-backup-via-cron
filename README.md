@@ -4,6 +4,7 @@ This image dumps your postgres databases every hour (OR custom cron defined in `
 compresses the dump using bz2 and uploads it to an
 amazon S3 bucket. Backups older than 30 days (OR days defined in `AWS_KEEP_FOR_DAYS`) are
 deleted automatically.
+It also have a `BACKUP_BZIP_PRIORITY` params for set the backup priority with ionice and nice values.
 
 Configure the backup source and s3 target with these environment
 variables:
@@ -15,6 +16,7 @@ variables:
 - `AWS_KEEP_FOR_DAYS`
 - `BACKUP_PATH`
 - `BACKUP_CRON_SCHEDULE`
+- `BACKUP_BZIP_PRIORITY`
 - `PGHOST`
 - `PGDATABASE`
 - `PGPORT`
@@ -39,6 +41,7 @@ fitty-postgres-backup:
     - AWS_KEEP_FOR_DAYS=< how many days do you want to keep backups>
     - BACKUP_PATH=<this will be the directory containing your backups on s3>
     - BACKUP_CRON_SCHEDULE=<this will be the cron schedule if defined. Standard value is 1 hour>
+    - BACKUP_BZIP_PRIORITY=<this is the bzip priority, standard value is "ionice -c 3 nice -n 10">
     - PGHOST=<see the link section below>
     - PGDATABASE=<dump only this database, default value export all>
     - PGUSER=<username>
