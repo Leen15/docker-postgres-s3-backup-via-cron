@@ -33,6 +33,7 @@ RUN chmod 0700 /backup/s3upload.rb
 
 # Define default CRON_SCHEDULE to 1 your
 ENV BACKUP_CRON_SCHEDULE="0 * * * *"
+ENV BACKUP_BZIP_PRIORITY="ionice -c 3 nice -n 10"
 
 # Prepare cron
 RUN touch /var/log/cron.log
