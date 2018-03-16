@@ -36,7 +36,6 @@ ENV BACKUP_CRON_SCHEDULE="0 * * * *"
 ENV BACKUP_PRIORITY="ionice -c 3 nice -n 10"
 
 # Prepare cron
-RUN touch /var/log/cron.log
 ADD crontab /etc/cron.d/backup-cron
 RUN chmod 0644 /etc/cron.d/backup-cron
 

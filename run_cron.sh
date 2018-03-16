@@ -9,4 +9,4 @@ cat /etc/cron.d/backup-cron >> /tmp/backup-cron
 mv /tmp/backup-cron /etc/cron.d/backup-cron
 
 
-cron  && tail -f /var/log/cron.log
+touch /var/log/cron.log && cron  && tail -f /var/log/cron.log
