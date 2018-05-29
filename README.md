@@ -32,7 +32,7 @@ or [docker compose](https://docs.docker.com/compose/), put this in your
 
 ```yaml
 fitty-postgres-backup:
-  image: 'jannis/postgres-s3-backup-via-cron'
+  image: 'leen15/postgres-s3-backup-via-cron'
   environment:
     - AWS_ACCESS_KEY_ID=<access key>
     - AWS_BUCKET_NAME=<your s3 bucket name>
@@ -57,4 +57,4 @@ The `links` section is optional, of course, just make sure you update the
 
 ## Thanks
 
-Adapted from [here](https://blog.danivovich.com/2015/07/23/postgres-backups-to-s3-with-docker-and-systemd/), [here](http://blog.oestrich.org/2015/01/pg-to-s3-backup-script/) and [here](https://www.ekito.fr/people/run-a-cron-job-with-docker/].
+Adapted from [here](https://blog.danivovich.com/2015/07/23/postgres-backups-to-s3-with-docker-and-systemd/), [here](http://blog.oestrich.org/2015/01/pg-to-s3-backup-script/) and [here](https://www.ekito.fr/people/run-a-cron-job-with-docker/).
