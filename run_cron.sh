@@ -8,5 +8,7 @@ env | egrep '^AWS|^PG|^BACKUP' | sort > /tmp/backup-cron
 cat /etc/cron.d/backup-cron >> /tmp/backup-cron
 mv /tmp/backup-cron /etc/cron.d/backup-cron
 
+#disable logrotate for cron file so the tail will keep working
+mv /etc/logrotate.d/rsyslog rsyslog.disabled
 
 touch /var/log/cron.log && cron  && tail -f /var/log/cron.log
