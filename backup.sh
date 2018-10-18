@@ -12,12 +12,13 @@ rm -f /tmp/backup.sql.dump.bz2
 # echo "  - PGPORT=${PGPORT}"
 # echo "  - PGUSER=${PGUSER}"
 # echo "  - PGPASSWORD=${PGPASSWORD}"
-echo "`date` Creating postgres dump"
 
+echo "`date` Creating postgres dump"
 [ -z "$PGDATABASE" ] && CMD=pg_dumpall || CMD="pg_dump ${PGDATABASE}"
 $BACKUP_PRIORITY $CMD > /tmp/backup.sql.dump
+
 echo "`date` Compressing dump"
-$BACKUP_PRIORITY bzip2 /tmp/backup.sql.dump
+lbzip2 /tmp/backup.sql.dump
 
 echo "`date` Uploading to S3"
 /backup/s3upload.rb
