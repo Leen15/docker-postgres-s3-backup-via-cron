@@ -19,18 +19,15 @@ if [ -f /tmp/backup.sql.dump ]; then
   exit 0
 fi
 if [ -z "$PGDATABASE" ]; then
+  FILENAME=all_databases.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
   CMD=pg_dumpall
 else
+  FILENAME=$PGDATABASE.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
   CMD="pg_dump ${PGDATABASE}"
 fi
 $BACKUP_PRIORITY $CMD > /tmp/backup.sql.dump
 
 echo "`date` Compressing dump"
-if [ -z "$PGDATABASE" ]; then
-  FILENAME=$PGDATABASE.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
-else
-  FILENAME=all_databases.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
-fi
 mv /tmp/backup.sql.dump /tmp/$FILENAME
 lbzip2 /tmp/$FILENAME
 
