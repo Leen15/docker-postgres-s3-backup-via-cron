@@ -1,27 +1,24 @@
-FROM ubuntu:14.04
+FROM ruby:2.3
 MAINTAINER jannis@gmail.com
 
-RUN apt-get update -y
-RUN apt-get install -y wget htop lbzip2
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >  /etc/apt/sources.list.d/pgdg.list
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-RUN apt-get update -y
-RUN apt-get install -y postgresql-client-9.6 ruby ruby-dev build-essential libxml2-dev libxslt-dev liblzma-dev zlib1g-dev patch
-
+RUN apt-get update -y && \
+    apt-get install -y wget htop lbzip2 gnupg2 build-essential libxml2-dev libxslt-dev liblzma-dev zlib1g-dev patch libpq5 && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-get update -y && \
+    apt-get install -y postgresql-client-9.6
 
 # Create workdir
 RUN mkdir /backup
 WORKDIR /backup
 
-
 # Prepare ruby & gems
 COPY Gemfile /backup/Gemfile
 COPY Gemfile.lock /backup/Gemfile.lock
-RUN gem install nokogiri -v 1.6.7.1 -- --use-system-libraries=true --with-xml2-include=/usr/include/libxml2
-RUN gem install bundler
-RUN bundle config build.nokogiri --use-system-libraries=true --with-xml2-include=/usr/include/libxml2
-RUN NOKOGIRI_USE_SYSTEM_LIBRARIES=1 bundle install
-
+RUN gem install nokogiri -v 1.6.7.1 -- --use-system-libraries=true --with-xml2-include=/usr/include/libxml2 && \
+    gem install bundler && \
+    bundle config build.nokogiri --use-system-libraries=true --with-xml2-include=/usr/include/libxml2 && \
+    NOKOGIRI_USE_SYSTEM_LIBRARIES=1 bundle install
 
 # Copy scripts
 COPY run_cron.sh /backup/run_cron.sh
