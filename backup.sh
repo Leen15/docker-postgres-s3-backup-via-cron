@@ -18,11 +18,19 @@ if [ -f /tmp/backup.sql.dump ]; then
   echo "Dump in progress, aborting..."
   exit 0
 fi
-[ -z "$PGDATABASE" ] && CMD=pg_dumpall || CMD="pg_dump ${PGDATABASE}"
+if [ -z "$PGDATABASE" ]; then
+  CMD=pg_dumpall
+else
+  CMD="pg_dump ${PGDATABASE}"
+fi
 $BACKUP_PRIORITY $CMD > /tmp/backup.sql.dump
 
 echo "`date` Compressing dump"
-FILENAME=$PGDATABASE.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
+if [ -z "$PGDATABASE" ]; then
+  FILENAME=$PGDATABASE.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
+else
+  FILENAME=all_databases.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
+fi
 mv /tmp/backup.sql.dump /tmp/$FILENAME
 lbzip2 /tmp/$FILENAME
 
