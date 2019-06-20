@@ -2,7 +2,7 @@ FROM ruby:2.3
 MAINTAINER jannis@gmail.com
 
 RUN apt-get update -y && \
-    apt-get install -y wget htop lbzip2 gnupg2 build-essential libxml2-dev libxslt-dev liblzma-dev zlib1g-dev patch libpq5 && \
+    apt-get install -y wget htop lbzip2 gnupg2 build-essential libxml2-dev libxslt-dev liblzma-dev zlib1g-dev patch libpq5 cron && \
     echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-get update -y && \
