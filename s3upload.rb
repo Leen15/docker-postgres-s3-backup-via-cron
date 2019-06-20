@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'time'
 require 'aws-sdk'
 require 'fileutils'
 
@@ -7,12 +6,8 @@ bucket_name = ENV['AWS_BUCKET_NAME']
 project_path = ENV['BACKUP_PATH']
 database_name = ENV['PGDATABASE'] || 'all_databases'
 
-time = Time.now.strftime("%Y-%m-%d-%H-%M-%S")
-filename = "#{database_name}.#{time}.sql.dump.bz2"
-filepath = "/tmp/#{filename}"
-
-# Move the backup file from docker run
-FileUtils.mv('/tmp/backup.sql.dump.bz2', filepath)
+filepath = ARGV[0]
+filename = File.basename(filepath)
 
 # verify file exists and file size is > 0 bytes
 unless File.exists?(filepath) && File.new(filepath).size > 0

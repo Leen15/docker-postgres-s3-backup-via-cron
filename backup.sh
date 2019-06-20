@@ -14,12 +14,23 @@ rm -f /tmp/backup.sql.dump.bz2
 # echo "  - PGPASSWORD=${PGPASSWORD}"
 
 echo "`date` Creating postgres dump"
-[ -z "$PGDATABASE" ] && CMD=pg_dumpall || CMD="pg_dump ${PGDATABASE}"
+if [ -f /tmp/backup.sql.dump ]; then
+  echo "Dump in progress, aborting..."
+  exit 0
+fi
+if [ -z "$PGDATABASE" ]; then
+  FILENAME=all_databases.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
+  CMD=pg_dumpall
+else
+  FILENAME=$PGDATABASE.$(date +"%Y-%m-%d-%H-%M-%S").sql.dump
+  CMD="pg_dump ${PGDATABASE}"
+fi
 $BACKUP_PRIORITY $CMD > /tmp/backup.sql.dump
 
 echo "`date` Compressing dump"
-lbzip2 /tmp/backup.sql.dump
+mv /tmp/backup.sql.dump /tmp/$FILENAME
+lbzip2 /tmp/$FILENAME
 
 echo "`date` Uploading to S3"
-/backup/s3upload.rb
+/backup/s3upload.rb /tmp/$FILENAME.bz2
 echo "`date` Done!"
