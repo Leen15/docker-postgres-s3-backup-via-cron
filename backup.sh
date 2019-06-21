@@ -33,6 +33,5 @@ lbzip2 /tmp/$FILENAME
 
 echo "`date` Uploading to S3"
 /backup/s3upload.rb /tmp/$FILENAME.bz2
-rm /tmp/$FILENAME.bz2
 
 echo "`date` Done!"
