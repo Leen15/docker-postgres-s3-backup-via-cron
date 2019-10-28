@@ -1,2 +1,2 @@
-source "https://rubygems.org"  
+source "https://rubygems.org"
 gem 'aws-sdk', '< 2'
